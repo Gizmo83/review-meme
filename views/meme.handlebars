@@ -1,0 +1,38 @@
+
+<div class="container" style="text-align: center;">
+    <div class="jumbotron">
+        <h1>Meme Generator</h1>
+    </div>
+    <div class="">
+        <img id="meme" style="width: 500px;" src={{completedMeme.url}}><br>
+        <button type="button" id="save" class="btn btn-primary">Save</button>
+    </div>
+
+    <div class="">
+        {{#if save}}
+            <h3>Saved Memes</h3>
+            {{#each save}}
+                <img style="width: 500px;" src={{this.url}}><br>
+            {{/each}}
+        {{/if}}
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#save").on("click", function() {
+        event.preventDefault();
+
+        var memeSave = {
+            url: $("#meme").attr("src")
+        };
+        console.log(memeSave);
+
+        $.ajax("/save", {
+            type: "POST",
+            data: memeSave
+        }).then(function() {
+            location.reload();
+        });        
+    })
+</script>
