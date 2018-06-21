@@ -22,7 +22,7 @@ var mysql = require("mysql");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "root",
+  password: "",
   database: "meme_db"
 });
 
@@ -34,6 +34,9 @@ connection.connect(function(err) {
 
   console.log("connected as id " + connection.threadId);
 });
+
+// Serve static content for the app from the "public" directory in the application directory.
+app.use(express.static("public"));
 
 var memes;
 var selectedMeme;
@@ -89,9 +92,9 @@ app.get("/meme", function(req, res) {
 
         if (data.length > 0) {
             for (var i=0; i < data.length; i++) {
-                saved.push({url: data[i].url})
+                saved.push({url: data[i].url, id: data[i].id})
             }
-            console.log("this is saved: ", saved[0].url)
+            console.log("this is saved: ", saved[0])
             res.render("meme", {completedMeme:completedMeme, save: saved})
         } else {
             res.render("meme", {completedMeme:completedMeme})
@@ -108,6 +111,16 @@ app.post("/save", function(req, res) {
         }
         res.json(result);
     })
+})
+
+app.delete("/delete/:id", function(req, res) {
+
+    connection.query("DELETE FROM memes WHERE id = ?", [req.params.id], function(err, result) {
+        if (err) {
+            throw err;
+        }
+        res.json(result);
+    } )
 })
 
 

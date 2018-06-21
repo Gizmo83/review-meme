@@ -3,9 +3,11 @@
         <h1>Meme Generator</h1>
         <h3>Select an image to create meme</h3>
     </div>
-    {{#each meme}}
-        <a href="/create/{{this.id}}">
-            <img style="width: 300px;" src={{this.url}}>
-        </a>
-    {{/each}}
+    <div id="images">
+        {{#each meme}}
+            <a href="/create/{{this.id}}">
+                <img src={{this.url}}>
+            </a>
+        {{/each}}
+    </div>
 </div>
