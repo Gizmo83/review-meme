@@ -71,7 +71,7 @@ app.get("/create/:img", function(req, res) {
 var completedMeme;
 
 app.post("/meme", function(req, res) {
-    console.log(req.body);
+    console.log("req.body: ",req.body);
 
     request.post({url:"https://api.imgflip.com/caption_image", form: req.body}, function(err, response, body) {
         if (err) {
@@ -79,7 +79,7 @@ app.post("/meme", function(req, res) {
         }
         console.log(JSON.parse(body).data);
         completedMeme = JSON.parse(body).data;
-        res.json(completedMeme);
+        res.redirect("/meme")
     })
 });
 

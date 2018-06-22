@@ -10,15 +10,16 @@
         <button type="button" id="save" class="btn btn-primary">Save</button>
     </div>
 
-    <div class="images">
+
         {{#if save}}
             <h3>Saved Memes</h3>
-            {{#each save}}
-                <img class="saved-meme" style="max-width: 400px;" src={{this.url}}><br>
-                <button type="button" class="delete btn btn-danger" data-id={{this.id}}>Delete</button>                
-            {{/each}}
+            <div id="images">
+                {{#each save}}
+                    <img class="saved-meme" style="max-width: 400px;" src={{this.url}}><br>
+                    <button type="button" class="delete btn btn-danger" data-id={{this.id}}>Delete</button>                
+                {{/each}}
+            </div>
         {{/if}}
-    </div>
 </div>
 
 <script type="text/javascript">
