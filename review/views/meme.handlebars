@@ -1,0 +1,56 @@
+
+<div class="container" style="text-align: center;">
+    <div class="jumbotron">
+        <a href="/">
+            <h1>Meme Generator</h1>
+        </a>
+    </div>
+    <div class="">
+        <img id="meme" style="width: 400px;" src={{completedMeme.url}}><br>
+        <button type="button" id="save" class="btn btn-primary">Save</button>
+    </div>
+
+    <div class="images">
+        {{#if save}}
+            <h3>Saved Memes</h3>
+            {{#each save}}
+                <img class="saved-meme" style="max-width: 400px;" src={{this.url}}><br>
+                <button type="button" class="delete btn btn-danger" data-id={{this.id}}>Delete</button>                
+            {{/each}}
+        {{/if}}
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#save").on("click", function() {
+        event.preventDefault();
+
+        var memeSave = {
+            url: $("#meme").attr("src")
+        };
+        console.log(memeSave);
+
+        $.ajax("/save", {
+            type: "POST",
+            data: memeSave
+        }).then(function() {
+            location.reload();
+        });        
+    });
+
+    $(".delete").on("click", function() {
+        event.preventDefault();
+
+        var id = $(this).data("id");
+        console.log(id);
+
+        $.ajax("/delete/" + id, {
+            type: "DELETE"
+        }).then(function() {
+            location.reload();
+        })
+
+
+    })
+</script>

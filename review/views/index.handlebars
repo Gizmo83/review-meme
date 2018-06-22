@@ -1,0 +1,13 @@
+<div class="container" style="text-align: center;">
+    <div class="jumbotron">
+        <h1>Meme Generator</h1>
+        <h3>Select an image to create meme</h3>
+    </div>
+    <div id="images">
+        {{#each meme}}
+            <a href="/create/{{this.id}}">
+                <img src={{this.url}}>
+            </a>
+        {{/each}}
+    </div>
+</div>
