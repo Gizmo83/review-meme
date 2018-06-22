@@ -1,38 +1,22 @@
+{{! the beginning html is just for formatting --}}
+{{!-- Create a spot for the image, two input boxes, and a submit button --}}
+
 <div class="container" style="text-align: center;">
     <div class="jumbotron">
         <a href="/">
             <h1>Meme Generator</h1>
         </a>
     </div>
-    <img style="width: 500px;" src={{meme.url}}>
-    <form id="input" action="" data-id={{meme.id}}>
-        Top Text: <input id="text0" type="text">
-        Bottom Text: <input id="text1" type="text">
+    <img style="width: 400px;" src={{selectedMeme.url}}>
+{{!-- Here we will use the built in form method to handle the POST note the route we are using /meme--}}
+{{!-- Since we need additional data for the API (reference API doc) we will include additional input tags but keep them hidden.  DO NOT DO THIS if it's your personal password because it can be seen.--}}
+{{!-- Create POST route --}}
+    <form id="input" action="/meme" method="POST" data-id={{selectedMeme.id}}>
+        Top Text: <input id="text0" type="text" name="text0">
+        Bottom Text: <input id="text1" type="text" name="text1">
+        <input type="hidden" name="template_id" value="{{selectedMeme.id}}">
+        <input type="hidden" name="username" value="imgflip_hubot">
+        <input type="hidden" name="password" value="imgflip_hubot">
         <button type="submit">Submit</button>
     </form>    
 </div>
-
-<script type="text/javascript">
-
-    $("button").on("click", function() {
-        event.preventDefault();
-        var memeInfo = {
-            text0 : $("#text0").val().trim(),
-            text1 : $("#text1").val().trim(),
-            template_id : $("#input").data("id"),
-            username: "imgflip_hubot",
-            password: "imgflip_hubot"
-        }
-
-        //console.log(memeInfo);
-
-        $.ajax("/meme", {
-            type: "POST",
-            data: memeInfo
-        }).then(function() {
-            window.location = "/meme"
-        });
-
-
-    })
-</script>

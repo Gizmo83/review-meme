@@ -6,15 +6,18 @@
         </a>
     </div>
     <div class="">
+        {{!-- just do the image tag first to show them. After image shows up add the save button and event listener with all the info need.  After work on POST route. --}}
         <img id="meme" style="width: 400px;" src={{completedMeme.url}}><br>
         <button type="button" id="save" class="btn btn-primary">Save</button>
     </div>
 
+    {{!-- saved meme section.  Handlebars has a built in IF method.  So if we send saved data then this will show.   --}}
     <div class="images">
-        {{#if save}}
+        {{#if saved}}
             <h3>Saved Memes</h3>
-            {{#each save}}
+            {{#each saved}}
                 <img class="saved-meme" style="max-width: 400px;" src={{this.url}}><br>
+
                 <button type="button" class="delete btn btn-danger" data-id={{this.id}}>Delete</button>                
             {{/each}}
         {{/if}}
@@ -22,10 +25,10 @@
 </div>
 
 <script type="text/javascript">
-
+// we target the save button and pull the attribute SRC.  This is the data we will save to our DB.
     $("#save").on("click", function() {
         event.preventDefault();
-
+// here we create an object with a key that matches our db
         var memeSave = {
             url: $("#meme").attr("src")
         };
